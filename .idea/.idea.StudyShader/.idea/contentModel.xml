@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="C:\Users\7dyam\.Rider2018.3\system\extResources" t="IncludeRecursive" />
+    <e p="C:\Users\7dyam\.Rider2018.3\system\resharper-host\local\Transient\ReSharperHost\v183\SolutionCaches\_StudyShader.-159553405.00" t="ExcludeRecursive" />
+    <e p="E:\home\unity-project\StudyShader" t="IncludeRecursive">
+      <e p="Assembly-CSharp.csproj" t="IncludeRecursive" />
+      <e p="Assets" t="Include">
+        <e p="README_SD_UnityChan.txt" t="Include" />
+        <e p="Scripts" t="Include">
+          <e p="DispDepth.cs" t="Include" />
+        </e>
+        <e p="Shaders" t="Include">
+          <e p="GeoSample.shader" t="Include" />
+        </e>
+        <e p="UnityChan" t="Include">
+          <e p="Models" t="Include">
+            <e p="UnityChanShader" t="Include">
+              <e p="Shader" t="Include">
+                <e p="readme.txt" t="Include" />
+                <e p="Unitychan_chara_akarami_blend.shader" t="Include" />
+                <e p="Unitychan_chara_eye.shader" t="Include" />
+                <e p="Unitychan_chara_eye_blend.shader" t="Include" />
+                <e p="Unitychan_chara_eyelash_blend.shader" t="Include" />
+                <e p="Unitychan_chara_fuku.shader" t="Include" />
+                <e p="Unitychan_chara_fuku_ds.shader" t="Include" />
+                <e p="Unitychan_chara_hada.shader" t="Include" />
+                <e p="Unitychan_chara_hada_blend.shader" t="Include" />
+                <e p="Unitychan_chara_hair.shader" t="Include" />
+                <e p="Unitychan_chara_hair_ds.shader" t="Include" />
+              </e>
+            </e>
+          </e>
+          <e p="Scripts" t="Include">
+            <e p="AutoBlink.cs" t="Include" />
+            <e p="AutoBlinkforSD.cs" t="Include" />
+            <e p="CameraController.cs" t="Include" />
+            <e p="FaceUpdate.cs" t="Include" />
+            <e p="IdleChanger.cs" t="Include" />
+            <e p="IKCtrlRightHand.cs" t="Include" />
+            <e p="IKLookAt.cs" t="Include" />
+            <e p="RandomWind.cs" t="Include" />
+            <e p="SpringBone.cs" t="Include" />
+            <e p="SpringCollider.cs" t="Include" />
+            <e p="SpringManager.cs" t="Include" />
+            <e p="ThirdPersonCamera.cs" t="Include" />
+            <e p="UnityChanControlScriptWithRgidBody.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="Library" t="ExcludeRecursive" />
+      <e p="obj" t="ExcludeRecursive" />
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="StudyShader.sln" t="IncludeFlat" />
+      <e p="Temp" t="ExcludeRecursive">
+        <e p="bin" t="ExcludeRecursive" />
+      </e>
+    </e>
+  </component>
+</project>
