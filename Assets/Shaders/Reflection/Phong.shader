@@ -58,7 +58,7 @@
                 // 頂点法線
                 float3 normal = normalize(i.worldNormal);
 
-                // ライト方向のベクトル(ディレクションライトの方向ベクトル)
+                // ライト方向のベクトル(ディレクションライトの方向ベクトルの逆ベクトル)
                 float3 lightDir = normalize(UnityWorldSpaceLightDir(i.worldPos));
                 float NdotL = dot(normal, lightDir);
 
