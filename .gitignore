@@ -20,3 +20,6 @@
 # extra asset
 /Assets/Extras/
 /Assets/Extras.meta
+
+# IntelliJ
+.idea/
