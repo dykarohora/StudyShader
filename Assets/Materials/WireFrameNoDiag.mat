@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WireFrameAlt
-  m_Shader: {fileID: 4800000, guid: 86f92cbdf5748354889832ba74e2361d, type: 3}
+  m_Name: WireFrameNoDiag
+  m_Shader: {fileID: 4800000, guid: 16778322ce16df543af8b9c4d1698beb, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -71,10 +71,10 @@ Material:
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _WireframeVal: 0.0117
+    - _WireframeVal: 0.013
     - _ZWrite: 1
     m_Colors:
-    - _BackColor: {r: 1, g: 0, b: 0, a: 1}
+    - _BackColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _FrontColor: {r: 1, g: 1, b: 1, a: 1}

@@ -1,8 +1,4 @@
-﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
-
-Shader "Custom/Geometry/WireframeAlt"
+﻿Shader "Custom/Geometry/WireframeAlt"
 {
     Properties
     {
@@ -40,7 +36,7 @@ Shader "Custom/Geometry/WireframeAlt"
 
             v2g vert(appdata_base v) {
                 v2g o;
-                // 頂点をワールド空間座標系に変換する
+                // 頂点をクリップ空間座標系に変換する
                 o.pos = UnityObjectToClipPos(v.vertex);
                 return o;
             }

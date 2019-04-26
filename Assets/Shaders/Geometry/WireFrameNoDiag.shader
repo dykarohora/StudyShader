@@ -1,9 +1,14 @@
-﻿Shader "Unlit/WireFrameNoDiag"
+﻿Shader "Custom/Geometry/WireFrameNoDiag"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
+        [PowerSlider(3.0)]
+        _WireframeVal ("Wireframe width", Range(0., 0.34)) = 0.05
+        _FrontColor("Front color", Color) = (1,1,1,1)
+        _BackColor("Back color", Color) = (1,1,1,1)
     }
+
     SubShader
     {
         Tags { "RenderType"="Opaque" }
@@ -11,46 +16,77 @@
 
         Pass
         {
+            Cull Off
+            
             CGPROGRAM
             #pragma vertex vert
+            #pragma geometry geom
             #pragma fragment frag
-            // make fog work
-            #pragma multi_compile_fog
 
             #include "UnityCG.cginc"
 
-            struct appdata
-            {
-                float4 vertex : POSITION;
-                float2 uv : TEXCOORD0;
+            struct v2g {
+                float4 pos: SV_POSITION;
             };
 
-            struct v2f
-            {
-                float2 uv : TEXCOORD0;
-                UNITY_FOG_COORDS(1)
-                float4 vertex : SV_POSITION;
+            struct g2f {
+                float4 pos: SV_POSITION;
+                float3 bary: TEXCOORD0;
             };
 
-            sampler2D _MainTex;
-            float4 _MainTex_ST;
-
-            v2f vert (appdata v)
-            {
-                v2f o;
-                o.vertex = UnityObjectToClipPos(v.vertex);
-                o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                UNITY_TRANSFER_FOG(o,o.vertex);
+            v2g vert(appdata_base v) {
+                v2g o;
+                // 頂点をワールド空間座標系に変換する
+                o.pos = mul(unity_ObjectToWorld, v.vertex);
                 return o;
             }
 
-            fixed4 frag (v2f i) : SV_Target
-            {
-                // sample the texture
-                fixed4 col = tex2D(_MainTex, i.uv);
-                // apply fog
-                UNITY_APPLY_FOG(i.fogCoord, col);
-                return col;
+            [maxvertexcount(3)]
+            void geom(triangle v2g IN[3], inout TriangleStream<g2f> triStream) {
+                float3 param = float3(0,0,0);
+
+                // ポリゴンの各辺の長さ
+                float edgeA = length(IN[0].pos - IN[1].pos);
+                float edgeB = length(IN[1].pos - IN[2].pos);
+                float edgeC = length(IN[2].pos - IN[0].pos);
+                
+                if(edgeA > edgeB && edgeA && edgeC) {
+                    // Aが一番ながい
+                    param.y = 1.;
+                } else if(edgeB > edgeC && edgeB > edgeA) {
+                    // Bが一番長い
+                    param.x = 1.;
+                } else {
+                    // Cが一番長い
+                    param.z = 1.;
+                }
+
+                g2f o;
+
+                o.pos = mul(UNITY_MATRIX_VP, IN[0].pos);
+                o.bary = float3(1,0,0) + param;
+                triStream.Append(o);
+
+                o.pos = mul(UNITY_MATRIX_VP, IN[1].pos);
+                o.bary = float3(0,0,1) + param;
+                triStream.Append(o);
+
+                o.pos = mul(UNITY_MATRIX_VP, IN[2].pos);
+                o.bary = float3(0,1,0) + param;
+                triStream.Append(o);
+                triStream.RestartStrip();
+            }
+
+            float _WireframeVal;
+            fixed4 _BackColor;
+
+            fixed4 frag(g2f i) : SV_Target {
+                // baryは線形補間される
+                // 頂点を結ぶ直線上ならば、いずれかは0
+                if(!any(bool3(i.bary.x < _WireframeVal, i.bary.y < _WireframeVal, i.bary.z < _WireframeVal))) {
+                    discard;
+                }
+                return _BackColor;
             }
             ENDCG
         }

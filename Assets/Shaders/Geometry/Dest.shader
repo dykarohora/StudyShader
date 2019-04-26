@@ -155,7 +155,6 @@
 
     SubShader
     {
-
         Tags
         {
             "RenderType" = "Transparent"
