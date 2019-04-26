@@ -79,7 +79,7 @@
 
                     g2f o;
                     o.color = _Color * IN[0].color;
-
+                    // ベース頂点以外の頂点を上で求めたベクトル方向に伸ばした頂点を使ってポリゴンを作るイメージ
                     o.vertex = UnityObjectToClipPos(float4(v1.vertex.xyz, 1));
                     triStream.Append(o);   
 
@@ -140,6 +140,8 @@
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
+            // オブジェクトのワールド座標
+            // スクリプトから与える
             float4 _WorldPosition;
 
             float4 _Tint;
@@ -162,6 +164,7 @@
                 return o;
             }
 
+            // 頂点シェーダでよくね？
             [maxvertexcount(3)]
             void geo(triangle v2f v[3], inout TriangleStream<v2f> TriStream) {
                 for(int i = 0; i<3; i++) {
@@ -181,14 +184,19 @@
 
             fixed4 frag (v2f i) : SV_Target
             {
+                // リムライティング
+                // 法線
                 float3 normalDir = normalize(i.normal);
                 // 頂点からカメラへの方向ベクトル
                 float3 viewDir = normalize(_WorldSpaceCameraPos.xyz - i.wpos.xyz);
+                // モデルの縁を光らせたいので、法線と視線の内積から光量を計算する
                 float NNdotV = 1 - dot(normalDir, viewDir);
                 float rim = pow(NNdotV, _RimPower) * _RimAmplitude; 
-                // sample the texture
+                // テクスチャカラーを取得して、頂点カラーとパラメータで指定した色合いを乗ずる
                 fixed4 col = tex2D(_MainTex, i.uv) * i.color * _Tint;
+                // リムライトの色合いを重ねる
                 col.rgb = col.rgb * _RimTint.a + rim * _RimTint.rgb;                
+                
                 col.a = saturate(halpha(i.wpos.y - _WorldPosition.y));
                 
                 return col;

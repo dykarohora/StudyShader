@@ -7,9 +7,9 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WireFrameUnlit
-  m_Shader: {fileID: 4800000, guid: 20baa9eafc750491687aa13c932f8fd3, type: 3}
-  m_ShaderKeywords: 
+  m_Name: Destruction
+  m_Shader: {fileID: 4800000, guid: dd77351f28be9bc48a2744ad89ddb5ed, type: 3}
+  m_ShaderKeywords: _METHOD_PROPERTY
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -56,29 +56,32 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _AlphaFactor: 1
     - _BumpScale: 1
     - _Cutoff: 0.5
+    - _Destruction: 0
     - _DetailNormalMapScale: 1
     - _DstBlend: 0
+    - _EndDistance: 0.3
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HeightOffset: 1
-    - _HeightPower: 12
+    - _InvFade: 3
     - _Metallic: 0
+    - _Method: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RimAmplitude: 0.623
-    - _RimPower: 3
+    - _PositionFactor: 1
+    - _RotationFactor: 0
+    - _ScaleFactor: 0
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
+    - _StartDistance: 0.6
     - _UVSec: 0
-    - _Width: 0.001
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 0.5430125, b: 0, a: 0.29411766}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RimTint: {r: 0, g: 0.20039988, b: 1, a: 1}
-    - _Tint: {r: 1, g: 1, b: 1, a: 0.1882353}
+    - _TintColor: {r: 0.5283019, g: 0.5283019, b: 0.5283019, a: 0.5803922}

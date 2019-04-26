@@ -7,8 +7,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: WireFrameUnlit
-  m_Shader: {fileID: 4800000, guid: 20baa9eafc750491687aa13c932f8fd3, type: 3}
+  m_Name: WireFrameAlt
+  m_Shader: {fileID: 4800000, guid: 86f92cbdf5748354889832ba74e2361d, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -40,7 +40,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 0f83c88893812674fb27a67cc3d624d9, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MetallicGlossMap:
@@ -63,22 +63,18 @@ Material:
     - _GlossMapScale: 1
     - _Glossiness: 0.5
     - _GlossyReflections: 1
-    - _HeightOffset: 1
-    - _HeightPower: 12
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RimAmplitude: 0.623
-    - _RimPower: 3
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _UVSec: 0
-    - _Width: 0.001
+    - _WireframeVal: 0.0319
     - _ZWrite: 1
     m_Colors:
-    - _Color: {r: 1, g: 0.5430125, b: 0, a: 0.29411766}
+    - _BackColor: {r: 1, g: 0, b: 0, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _RimTint: {r: 0, g: 0.20039988, b: 1, a: 1}
-    - _Tint: {r: 1, g: 1, b: 1, a: 0.1882353}
+    - _FrontColor: {r: 1, g: 1, b: 1, a: 1}
