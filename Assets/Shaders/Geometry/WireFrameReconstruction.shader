@@ -9,15 +9,14 @@
         _Tint("Wireframe tint", Color) = (1,1,1,1)
 
         [Header(Reconstruction)]
-        _PositionFactor("PositionFactor", Range(1.0, 50.0)) = 1.0
+        _PositionFactor("PositionFactor", Range(1.0, 6.0)) = 1.0
         _Reconstruction("Reconstruction", Range(0.0, 3.0)) = 0.0
 
         [Header(RimLighting)]
         _RimPower("Rim power", Range(0.1, 3)) = 1
         _RimAmplitude("Rim Amplitude", Range(0.1, 3)) = 1
         _RimTint("Rim tine", Color) = (1,1,1,1)
-        
-        // スクリプトから渡すようにする
+
         [Header(Height)]
         _HeightMin("Min Height", Range(-3.0, 3.0)) = 0.0
         _HeightMax("Max Height", Range(-3.0, 3.0)) = 0.0
@@ -51,7 +50,6 @@
                 float4 pos: SV_POSITION;
                 float3 bary: TEXCOORD0;
                 float4 wpos: TEXCOORD1;
-                float4 opos: TEXCOORD2;
             };
 
             appdata vert(appdata v) {
@@ -59,65 +57,54 @@
             }
 
             fixed _Reconstruction;
-
             float _PositionFactor;
+
             float _HeightMin;
             float _HeightMax;
 
             [maxvertexcount(3)]
             void geo(triangle appdata input[3], inout TriangleStream<g2f> triStream) {
-                // ポリゴンの中心
-                float3 center = (input[0].pos + input[1].pos + input[2].pos).xyz / 3;
+                // ポリゴンのy軸位置を求める
+                float4 center = (input[0].pos + input[1].pos + input[2].pos) / 3;
+                float h = (mul(unity_ObjectToWorld, center).y - _HeightMin) / (_HeightMax - _HeightMin);
+                // ちょっと補正
+                h = pow(h, 1.8);
+
                 // ポリゴンの面法線
                 float3 vec1 = input[1].pos - input[0].pos;
                 float3 vec2 = input[2].pos - input[0].pos;
                 float3 normal = normalize(cross(vec1, vec2));
-
-
+                
                 g2f o;
 
-                appdata v0 = input[0];
-                float h = (mul(unity_ObjectToWorld, input[0].pos).y - _HeightMin) / (_HeightMax - _HeightMin);
-                h = pow(h, 1.5);
-
-                v0.pos.xyz += normal * saturate(1 - _Reconstruction) * _PositionFactor * h;
-                o.pos = UnityObjectToClipPos(v0.pos);
-                o.bary = float3(1,0,0);
-                o.wpos = mul(unity_ObjectToWorld, input[0].pos);
-                o.opos = v0.pos;
-                triStream.Append(o);
-
-                appdata v1 = input[1];
-                v1.pos.xyz += normal * saturate(1 - _Reconstruction) * _PositionFactor  * h;
-                o.pos = UnityObjectToClipPos(v1.pos);
-                o.bary = float3(0,0,1);
-                o.wpos = mul(unity_ObjectToWorld, input[1].pos);
-                o.opos = v1.pos;
-                triStream.Append(o);
-                
-                appdata v2 = input[2];
-                v2.pos.xyz += normal * saturate(1 - _Reconstruction) * _PositionFactor * h;
-                o.pos = UnityObjectToClipPos(v2.pos);
-                o.bary = float3(0,1,0);
-                o.wpos = mul(unity_ObjectToWorld, input[2].pos);
-                o.opos = v2.pos;
-                triStream.Append(o);
-
+                [unroll]
+                for(int i=0; i<3; i++) {
+                    appdata v = input[i];
+                    v.pos.xyz += normal * saturate(1 - _Reconstruction) * _PositionFactor * h;
+                    o.pos = UnityObjectToClipPos(v.pos);
+                    if(i==0) {
+                        o.bary = float3(1,0,0);
+                    } else if(i==1) {
+                        o.bary = float3(0,0,1);
+                    } else {
+                        o.bary = float3(0,1,0);
+                    }
+                    o.wpos = mul(unity_ObjectToWorld, v.pos);
+                    triStream.Append(o); 
+                }
                 triStream.RestartStrip();
             }
 
             float _WidthFactor;
             fixed4 _Tint;
 
-
             fixed4 frag (g2f i) : SV_Target
             {
                 if(!any(bool3(i.bary.x < _WidthFactor, i.bary.y < _WidthFactor, i.bary.z < _WidthFactor))) {
                     discard;
                 }
-                fixed4 col = _Tint;
 
-                //
+                fixed4 col = _Tint;
                 float h = (i.wpos.y - _HeightMin) / (_HeightMax - _HeightMin) - 0.2;
                 col.a = saturate(_Reconstruction - h - 0.2);
                 return col;
